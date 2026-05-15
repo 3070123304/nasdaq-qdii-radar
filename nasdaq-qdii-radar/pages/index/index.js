@@ -157,7 +157,7 @@ Page({
 
     const winH = sys.windowHeight || sys.screenHeight || 603;
     this.setData({
-      scrollHeight: Math.max(winH - 260, 280),
+      scrollHeight: Math.max(winH - 208, 280),
     });
   },
 
@@ -181,7 +181,7 @@ Page({
         const hero = res[0];
         const tab = res[1];
         if (!hero || !tab || !windowH) return;
-        const h = windowH - hero.height - tab.height;
+        const h = windowH - hero.height - tab.height + 52;
         if (h > 100) {
           this.setData({ scrollHeight: Math.round(h) });
         }

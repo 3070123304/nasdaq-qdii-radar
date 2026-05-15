@@ -11,7 +11,7 @@
   flex-shrink: 0;
   position: relative;
   z-index: 1;
-  padding-bottom: 28px;
+  padding-bottom: 56px;
   color: #fff;
   overflow: hidden;
 }
@@ -137,13 +137,14 @@
   flex-shrink: 0;
   position: relative;
   z-index: 2;
+  margin-top: -52px;
 }
 
 .sheet {
   padding: 0 12px;
-  margin-top: 14px;
+  margin-top: 0;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 /* —— 三张汇总卡：横向扁长方形 + 文案单行 —— */
