@@ -8,18 +8,22 @@
         <view class="hero-text">
           <view class="hero-title-row">
             <text class="hero-title-main">纳指QDII</text>
-            <text class="hero-title-accent">限额雷达</text>
+            <text class="hero-title-accent">限额宝</text>
           </view>
-          <text class="hero-sub">一眼看全市场纳斯达克QDII基金限额</text>
+          <text class="hero-sub">全市场纳斯达克QDII基金限额</text>
         </view>
       </view>
 
       <view class="hero-meta">
         <view class="update-pill">
+          <view class="update-clock"></view>
           <text class="pill-label">数据更新时间：</text>
           <text class="pill-time">{{updateDateLabel}}</text>
         </view>
-        <text class="meta-hint">数据每日更新，部分基金实时变化</text>
+
+        <view class="risk-tip">
+          QDII限额信息仅供参考，不构成投资建议，请以基金公司公告为准。
+        </view>
       </view>
     </view>
   </view>
@@ -28,14 +32,11 @@
     <view class="sheet">
       <view class="summary-row">
         <view class="sum-card">
-          <view class="sum-icon-circle sum-icon-circle--blue">
-            <view class="ico-bag-wrap">
-              <view class="ico-bag"></view>
-              <text class="ico-bag-check">✓</text>
-            </view>
+          <view class="sum-icon-box sum-icon-box--blue">
+            <text class="sum-icon-symbol">✓</text>
           </view>
           <view class="sum-body">
-            <text class="sum-label">今日可买基金</text>
+            <text class="sum-label">可买基金</text>
             <view class="sum-value-row">
               <text class="sum-num">{{summary.buyable.value}}</text>
               <text class="sum-unit">只</text>
@@ -47,27 +48,11 @@
           </view>
         </view>
         <view class="sum-card">
-          <view class="sum-icon-circle sum-icon-circle--green">
-            <view class="ico-bell-ring"></view>
+          <view class="sum-icon-box sum-icon-box--orange">
+            <text class="sum-icon-symbol">¥</text>
           </view>
           <view class="sum-body">
-            <text class="sum-label">恢复申购</text>
-            <view class="sum-value-row">
-              <text class="sum-num">{{summary.resumed.value}}</text>
-              <text class="sum-unit">只</text>
-            </view>
-            <view class="sum-diff-row">
-              <text class="sum-diff-prefix">较昨日 </text>
-              <text class="sum-diff-num {{summary.resumed.trend === 'down' ? 'sum-diff-num--down' : 'sum-diff-num--up'}}">{{summary.resumed.deltaText}}</text>
-            </view>
-          </view>
-        </view>
-        <view class="sum-card">
-          <view class="sum-icon-circle sum-icon-circle--orange">
-            <view class="ico-pie"></view>
-          </view>
-          <view class="sum-body">
-            <text class="sum-label">累计可购额度</text>
+            <text class="sum-label">可购额度</text>
             <view class="sum-value-row">
               <text class="sum-num">{{summary.totalLimit.value}}</text>
               <text class="sum-unit">{{summary.totalLimit.unit}}</text>
@@ -80,10 +65,9 @@
         </view>
       </view>
 
-      <view class="glance" bindtap="onGlanceTap">
-        <text class="glance-tag">今日速览</text>
+      <view class="glance">
+        <text class="glance-tag">{{glanceTitle}}</text>
         <text class="glance-msg">{{glance}}</text>
-        <text class="glance-chev">›</text>
       </view>
 
       <view class="block-head">
@@ -103,7 +87,6 @@
           <text class="th th-name">基金名称</text>
           <text class="th th-limit">当前限额</text>
           <text class="th th-status">状态</text>
-          <text class="th th-time">更新时间</text>
         </view>
 
         <block wx:for="{{funds}}" wx:key="id">
@@ -121,58 +104,12 @@
               <text wx:elif="{{item.status === 'limited'}}" class="status-tag status-warn">限购</text>
               <text wx:else class="status-tag status-off">不可买</text>
             </view>
-            <view class="td td-time">
-              <text class="time-str">{{item.updatedAt}}</text>
-              <text class="cell-arrow">›</text>
-            </view>
           </view>
         </block>
-      </view>
-
-      <view class="quick-row">
-        <view class="quick-card" data-key="fav" bindtap="onFeatureTap">
-          <view class="quick-icon quick-icon--blue">
-            <text class="quick-star">★</text>
-          </view>
-          <text class="quick-title">我的收藏</text>
-          <text class="quick-desc">查看收藏的基金</text>
-        </view>
-        <view class="quick-card" data-key="remind" bindtap="onFeatureTap">
-          <view class="quick-icon quick-icon--purple">
-            <view class="mini-bell"></view>
-          </view>
-          <text class="quick-title">额度提醒</text>
-          <text class="quick-desc">恢复申购实时通知</text>
-        </view>
-        <view class="quick-card" data-key="changes" bindtap="onFeatureTap">
-          <view class="quick-icon quick-icon--green">
-            <view class="mini-trend"></view>
-          </view>
-          <text class="quick-title">今日变化</text>
-          <text class="quick-desc">查看额度变化榜</text>
-        </view>
       </view>
 
       <view class="scroll-bottom-space"></view>
     </view>
   </scroll-view>
 
-  <view class="tabbar" style="padding-bottom: {{safeBottom || 8}}px;">
-    <view class="tab {{activeTab === 'home' ? 'tab--on' : ''}}" data-tab="home" bindtap="onTabTap">
-      <view class="tab-ico tab-home"></view>
-      <text class="tab-name">首页</text>
-    </view>
-    <view class="tab {{activeTab === 'watchlist' ? 'tab--on' : ''}}" data-tab="watchlist" bindtap="onTabTap">
-      <view class="tab-ico tab-star"></view>
-      <text class="tab-name">自选</text>
-    </view>
-    <view class="tab {{activeTab === 'remind' ? 'tab--on' : ''}}" data-tab="remind" bindtap="onTabTap">
-      <view class="tab-ico tab-bell"></view>
-      <text class="tab-name">提醒</text>
-    </view>
-    <view class="tab {{activeTab === 'me' ? 'tab--on' : ''}}" data-tab="me" bindtap="onTabTap">
-      <view class="tab-ico tab-me"></view>
-      <text class="tab-name">我的</text>
-    </view>
-  </view>
 </view>

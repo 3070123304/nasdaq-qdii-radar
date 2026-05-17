@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#020617" />
+    <title>纳指QDII基金限额宝</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="phone-shell">
+      <main class="app-page">
+        <section class="hero">
+          <img class="hero-bg-img" src="../images/header-bg.png" alt="" />
+          <div class="hero-bg-mask"></div>
+          <div class="hero-inner">
+            <div class="hero-title-row">
+              <span class="hero-title-main">纳指QDII</span>
+              <span class="hero-title-accent">限额宝</span>
+            </div>
+            <p class="hero-sub">全市场纳斯达克QDII基金限额</p>
+            <div class="hero-meta">
+              <div class="update-pill">
+                <span class="update-clock"></span>
+                <span class="pill-label">数据更新时间：</span>
+                <span class="pill-time" id="updateDateLabel">--</span>
+              </div>
+              <div class="risk-tip">QDII限额信息仅供参考，不构成投资建议，请以基金公司公告为准。</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-sheet">
+          <div class="summary-grid">
+            <article class="sum-card">
+              <div class="sum-icon-box sum-icon-box--blue"><span>✓</span></div>
+              <div class="sum-body">
+                <span class="sum-label">可买基金</span>
+                <div class="sum-value-row"><span class="sum-num" id="buyableCount">0</span><span class="sum-unit">只</span></div>
+                <div class="sum-diff-row"><span>较昨日 </span><span class="sum-diff-num sum-diff-num--up" id="buyableDelta">+0</span></div>
+              </div>
+            </article>
+            <article class="sum-card">
+              <div class="sum-icon-box sum-icon-box--green"><span>↻</span></div>
+              <div class="sum-body">
+                <span class="sum-label">恢复申购</span>
+                <div class="sum-value-row"><span class="sum-num" id="resumedCount">0</span><span class="sum-unit">只</span></div>
+                <div class="sum-diff-row"><span>较昨日 </span><span class="sum-diff-num sum-diff-num--up" id="resumedDelta">+0</span></div>
+              </div>
+            </article>
+            <article class="sum-card">
+              <div class="sum-icon-box sum-icon-box--orange"><span>¥</span></div>
+              <div class="sum-body">
+                <span class="sum-label">平均可购额度</span>
+                <div class="sum-value-row"><span class="sum-num" id="avgLimit">0</span><span class="sum-unit">元</span></div>
+                <div class="sum-diff-row"><span>较昨日 </span><span class="sum-diff-num sum-diff-num--down" id="avgDelta">-0</span></div>
+              </div>
+            </article>
+          </div>
+
+          <button class="glance" id="glanceCard" type="button">
+            <span class="glance-tag" id="glanceTitle">今日速览</span>
+            <span class="glance-msg" id="glanceText">--</span>
+            <span class="glance-chev">›</span>
+          </button>
+
+          <section class="block-head">
+            <h2 class="block-title">基金限额一览</h2>
+            <div class="block-filters">
+              <select class="filter-chip" id="scopeSelect" aria-label="状态筛选">
+                <option value="all">状态</option>
+                <option value="available">仅可买</option>
+                <option value="limited">仅限购</option>
+                <option value="unavailable">不可买</option>
+              </select>
+              <select class="filter-chip" id="sortSelect" aria-label="限额排序">
+                <option value="limitDesc">限额</option>
+                <option value="limitAsc">从低到高</option>
+              </select>
+            </div>
+          </section>
+
+          <section class="fund-panel">
+            <div class="fund-thead">
+              <span class="th th-name">基金名称</span>
+              <span class="th th-limit">当前限额</span>
+              <span class="th th-status">状态</span>
+            </div>
+            <div id="fundList"></div>
+          </section>
+
+          <section class="quick-row">
+            <button class="quick-card" data-feature="我的收藏" type="button"><span class="quick-icon quick-icon--blue">★</span><span class="quick-title">我的收藏</span><span class="quick-desc">查看收藏的基金</span></button>
+            <button class="quick-card" data-feature="额度提醒" type="button"><span class="quick-icon quick-icon--purple">◔</span><span class="quick-title">额度提醒</span><span class="quick-desc">申购额度实时通知</span></button>
+            <button class="quick-card" data-feature="今日变化" type="button"><span class="quick-icon quick-icon--green">↗</span><span class="quick-title">今日变化</span><span class="quick-desc">查看额度变化榜</span></button>
+          </section>
+        </section>
+      </main>
+      <nav class="tabbar" aria-label="底部导航">
+        <button class="tab tab--on" data-tab="home" type="button"><span class="tab-ico tab-home"></span><span>首页</span></button>
+        <button class="tab" data-tab="watchlist" type="button"><span class="tab-ico tab-star"></span><span>自选</span></button>
+        <button class="tab" data-tab="remind" type="button"><span class="tab-ico tab-bell"></span><span>提醒</span></button>
+        <button class="tab" data-tab="me" type="button"><span class="tab-ico tab-me"></span><span>我的</span></button>
+      </nav>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./mockData.js"></script>
+    <script src="./webApp.js"></script>
+  </body>
+</html>
